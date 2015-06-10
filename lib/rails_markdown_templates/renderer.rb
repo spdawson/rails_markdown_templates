@@ -17,6 +17,7 @@
 # <http://www.gnu.org/licenses/>.
 
 require 'English'
+require 'json'
 require 'redcarpet'
 require 'yaml'
 
@@ -52,6 +53,11 @@ module RailsMarkdownTemplates
       metadata.map do |k,v|
         "<meta name=\"#{k}\" content=\"#{v}\" />"
       end.join("\n").html_safe
+    end
+
+    # Get JSON for the metadata
+    def metadata_json
+      metadata.to_json.html_safe
     end
 
     # Render before any other elements

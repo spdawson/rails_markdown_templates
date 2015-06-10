@@ -29,13 +29,15 @@ gem install rails_markdown_templates
 
 ## Rails configuration
 
-No configuration is necessary. By default, the key for the `content_for`
-block is `:metadata`; if you wish to change this, then create a file in the
+No configuration is necessary to get started. By default, the keys for the
+`content_for` blocks are `:metadata_tags` and `:metadata_json`; if you wish
+to change these, then create a file in the
 `config/initializers` directory, containing code such as the following.
 
 ```ruby
-# Set the metadata content key for the Markdown template handler
-ActionView::Template::Handlers::Markdown.metadata_content_key = :my_metadata
+# Set the metadata content keys for the Markdown template handler
+ActionView::Template::Handlers::Markdown.metadata_tags_key = :my_metadata_tags
+ActionView::Template::Handlers::Markdown.metadata_json_key = :my_metadata_json
 ```
 
 ## Embedded Ruby handling
@@ -60,15 +62,30 @@ author: Bob Dylan
 Here is part of the document; a very meaningful part.
 ```
 
-The `metadata_content_key` attribute defines the name of the content block
-into which metadata will be placed. Metadata can be retrieved in Rails views
-using a yield call:
-```ruby
-<%= yield :metadata %>
+The `metadata_tags_key` and `metadata_tags_key` attributes define the names
+of the content blocks into which metadata will be placed. Metadata can be
+retrieved in Rails views using yield calls; for example:
+
+```html
+<head>
+  <!-- Output meta tags -->
+  <%= yield :metadata_tags %>
+
+  <!-- Use metadata in JavaScript -->
+  <script>
+    var metadata = <%= yield :metadata_json %>;
+  </script>
+</head>
 ```
 
 This will output HTML `<meta />` tags: one for each metadata item present in
 the original YAML metadata block.
+
+> There is a restriction, however: you cannot `yield` the metadata content
+> block from within the markdown template in which the metadata is defined.
+>
+> This is because the ERB tags are evaluated *before* the template is
+> handed off to the Markdown parser.
 
 ## License
 

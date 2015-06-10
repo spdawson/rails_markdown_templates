@@ -23,10 +23,10 @@ module ActionView
   module Template::Handlers
     # Rails template handler for markdown
     class Markdown
-      class_attribute :default_format
-      class_attribute :metadata_content_key
+      class_attribute :default_format, :metadata_tags_key, :metadata_json_key
       self.default_format = Mime::HTML
-      self.metadata_content_key = :metadata
+      self.metadata_tags_key = :metadata_tags
+      self.metadata_json_key = :metadata_json
 
       def self.erb
         @erb ||= ActionView::Template.registered_template_handler :erb
@@ -39,11 +39,13 @@ module ActionView
         # Evaluate embedded Ruby
         compiled_source = erb.call(template)
 
-        key = self.metadata_content_key
+        tags_key = self.metadata_tags_key
+        json_key = self.metadata_json_key
         <<-RUBY_CODE
 markdown = Redcarpet::Markdown.new(RailsMarkdownTemplates::Renderer)
 output = markdown.render(begin;#{compiled_source};end)
-content_for("#{key}".to_sym, markdown.renderer.metadata_tags)
+content_for("#{tags_key}".to_sym, markdown.renderer.metadata_tags)
+content_for("#{json_key}".to_sym, markdown.renderer.metadata_json)
 output
         RUBY_CODE
       end
