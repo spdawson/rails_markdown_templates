@@ -19,3 +19,9 @@
 require 'rails_markdown_templates/core'
 require 'rails_markdown_templates/renderer'
 require 'rails_markdown_templates/version'
+
+module RailsMarkdownTemplates
+  mattr_accessor :metadata_tags_key, :metadata_json_key
+  @@metadata_tags_key = :metadata_tags
+  @@metadata_json_key = :metadata_json
+end

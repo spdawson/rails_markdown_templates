@@ -36,8 +36,8 @@ to change these, then create a file in the
 
 ```ruby
 # Set the metadata content keys for the Markdown template handler
-ActionView::Template::Handlers::Markdown.metadata_tags_key = :my_metadata_tags
-ActionView::Template::Handlers::Markdown.metadata_json_key = :my_metadata_json
+RailsMarkdownTemplates.metadata_tags_key = :my_metadata_tags
+RailsMarkdownTemplates.metadata_json_key = :my_metadata_json
 ```
 
 ## Embedded Ruby handling
