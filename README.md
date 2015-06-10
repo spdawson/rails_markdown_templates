@@ -1,9 +1,11 @@
 # RailsMarkdownTemplates
 
+## Synopsis
+
 The `rails_markdown_templates` gem allows the use of Markdown as a Rails
 template language. A leading metadata block is parsed, and the metadata
-made available via a `content_for` block with a customisable key. Embedded
-Ruby may be used in Markdown templates.
+made available as HTML `<meta />` tags via a `content_for` block with a
+customisable key. Embedded Ruby may be used in Markdown templates.
 
 ## Installation
 
@@ -27,13 +29,13 @@ gem install rails_markdown_templates
 
 ## Rails configuration
 
-Create the file `config/initializers/rails_markdown_templates.rb`, containing
-the following code.
+No configuration is necessary. By default, the key for the `content_for`
+block is `:metadata`; if you wish to change this, then create a file in the
+`config/initializers` directory, containing code such as the following.
+
 ```ruby
-# Hook up the Markdown template handler
-ActionView::Template::Handlers::Markdown.metadata_content_key = :metadata
-ActionView::Template.register_template_handler :md,
-  ActionView::Template::Handlers::Markdown
+# Set the metadata content key for the Markdown template handler
+ActionView::Template::Handlers::Markdown.metadata_content_key = :my_metadata
 ```
 
 ## Embedded Ruby handling
@@ -43,7 +45,8 @@ Markdown templates may contain standard erb tags.
 ## Metadata handling
 
 Markdown templates may optionally have a leading YAML metadata block; for
-example
+example:
+
 ```md
 ---
 title: This is the title
@@ -63,6 +66,9 @@ using a yield call:
 ```ruby
 <%= yield :metadata %>
 ```
+
+This will output HTML `<meta />` tags: one for each metadata item present in
+the original YAML metadata block.
 
 ## License
 
