@@ -62,9 +62,9 @@ author: Bob Dylan
 Here is part of the document; a very meaningful part.
 ```
 
-The `metadata_tags_key` and `metadata_tags_key` attributes define the names
+The `metadata_tags_key` and `metadata_tags_json` attributes define the names
 of the content blocks into which metadata will be placed. Metadata can be
-retrieved in Rails views using yield calls; for example:
+retrieved in Rails views using `yield` calls; for example:
 
 ```html
 <head>
