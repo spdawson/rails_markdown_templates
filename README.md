@@ -78,8 +78,13 @@ retrieved in Rails views using `yield` calls; for example:
 </head>
 ```
 
-This will output HTML `<meta />` tags: one for each metadata item present in
-the original YAML metadata block.
+The call to `yield` the `:metadata_tags` content block will output HTML
+`<meta />` tags: one for each metadata item present in the original YAML
+metadata block.
+
+The call to `yield` the `:metadata_json` content block will output the
+metdata as JSON. This will typically be useful as a mechanism by which
+metadata may be made available to JavaScript.
 
 > There is a restriction, however: you cannot `yield` the metadata content
 > block from within the markdown template in which the metadata is defined.
