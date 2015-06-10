@@ -17,4 +17,5 @@
 # <http://www.gnu.org/licenses/>.
 
 require 'rails_markdown_templates/core'
+require 'rails_markdown_templates/renderer'
 require 'rails_markdown_templates/version'

@@ -16,74 +16,8 @@
 # along with rails_markdown_templates. If not, see
 # <http://www.gnu.org/licenses/>.
 
-require 'English'
 require 'redcarpet'
-require 'yaml'
-
-# Custom Redcarpet HTML renderer for Markdown with a metadata block
-class MarkdownHTMLRenderer < Redcarpet::Render::HTML
-  include Redcarpet::Render::SmartyPants
-
-  attr_accessor :metadata
-
-  def initialize(options={})
-    redcarpet_options = {
-      no_intra_emphasis: true,
-      tables: true,
-      fenced_code_blocks: true,
-      autolink: true,
-      disable_indented_code_blocks: true,
-      strikethrough: true,
-      lax_spacing: true,
-      space_after_headers: true,
-      superscript: true,
-      underline: true,
-      highlight: true,
-      quote: true,
-      footnotes: true
-    }
-    super options.merge(redcarpet_options)
-    @metadata = {}
-  end
-
-  # Get HTML tag(s) for the metadata
-  def metadata_tags
-    metadata.map do |k,v|
-      "<meta name=\"#{k}\" content=\"#{v}\" />"
-    end.join("\n").html_safe
-  end
-
-  # Render before any other elements
-  def doc_header
-    nil
-  end
-
-  # Rendered after all the other elements
-  def doc_footer
-    nil
-  end
-
-  # Preprocess the whole document before the rendering process
-  def preprocess(full_document)
-    # Extract and store metadata block from start of document
-    #
-    # N.B. Implementation "borrowed" from Metadown:
-    #
-    #  https://github.com/steveklabnik/metadown
-    full_document =~ /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
-    self.metadata = YAML.load($1) if $1
-
-    # Return the document without the leading metadata block
-    $POSTMATCH or full_document
-  end
-
-  # Postprocess the whole document after the rendering process
-  #
-  # N.B. Cannot use postprocess: SmartyPants is using the single callback slot
-#  def postprocess(full_document)
-#    full_document
-#  end
-end
+require 'rails_markdown_templates/renderer'
 
 module ActionView
   module Template::Handlers
@@ -107,7 +41,7 @@ module ActionView
 
         key = self.metadata_content_key
         <<-RUBY_CODE
-markdown = Redcarpet::Markdown.new(MarkdownHTMLRenderer)
+markdown = Redcarpet::Markdown.new(RailsMarkdownTemplates::Renderer)
 output = markdown.render(begin;#{compiled_source};end)
 content_for("#{key}".to_sym, markdown.renderer.metadata_tags)
 output
@@ -117,9 +51,6 @@ output
   end
 end
 
-# This is the "real" initialization code
-#
-# @todo FIXME: move the above code into library/module/gem
-ActionView::Template::Handlers::Markdown.metadata_content_key = :metadata
+# Register the Markdown template handler
 ActionView::Template.register_template_handler :md,
   ActionView::Template::Handlers::Markdown
