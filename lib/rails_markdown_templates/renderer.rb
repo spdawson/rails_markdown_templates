@@ -44,7 +44,7 @@ module RailsMarkdownTemplates
         quote: true,
         footnotes: true
       }
-      super options.merge(redcarpet_options)
+      super redcarpet_options.merge(options)
       @metadata = {}
     end
 
