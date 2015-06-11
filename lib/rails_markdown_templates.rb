@@ -21,7 +21,22 @@ require 'rails_markdown_templates/renderer'
 require 'rails_markdown_templates/version'
 
 module RailsMarkdownTemplates
-  mattr_accessor :metadata_tags_key, :metadata_json_key
+  mattr_accessor :metadata_tags_key, :metadata_json_key, :redcarpet_options
   @@metadata_tags_key = :metadata_tags
   @@metadata_json_key = :metadata_json
+  @@redcarpet_options = {
+    no_intra_emphasis: true,
+    tables: true,
+    fenced_code_blocks: true,
+    autolink: true,
+    disable_indented_code_blocks: true,
+    strikethrough: true,
+    lax_spacing: true,
+    space_after_headers: true,
+    superscript: true,
+    underline: true,
+    highlight: true,
+    quote: true,
+    footnotes: true
+  }
 end

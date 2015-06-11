@@ -29,22 +29,7 @@ module RailsMarkdownTemplates
     attr_accessor :metadata
 
     def initialize(options={})
-      redcarpet_options = {
-        no_intra_emphasis: true,
-        tables: true,
-        fenced_code_blocks: true,
-        autolink: true,
-        disable_indented_code_blocks: true,
-        strikethrough: true,
-        lax_spacing: true,
-        space_after_headers: true,
-        superscript: true,
-        underline: true,
-        highlight: true,
-        quote: true,
-        footnotes: true
-      }
-      super redcarpet_options.merge(options)
+      super RailsMarkdownTemplates.redcarpet_options.merge(options)
       @metadata = {}
     end
 

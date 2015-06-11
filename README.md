@@ -40,6 +40,19 @@ RailsMarkdownTemplates.metadata_tags_key = :my_metadata_tags
 RailsMarkdownTemplates.metadata_json_key = :my_metadata_json
 ```
 
+It is also possible to override the set of options that are passed to
+[Redcarpet](https://github.com/vmg/redcarpet); for example,
+
+```ruby
+# Tweak options for the Markdown parser
+RailsMarkdownTemplates.redcarpet_options = {
+  no_intra_emphasis: false,
+  disable_indented_code_blocks: false,
+  space_after_headers: false,
+  highlight: false
+}
+```
+
 ## Embedded Ruby handling
 
 Markdown templates may contain standard erb tags.
