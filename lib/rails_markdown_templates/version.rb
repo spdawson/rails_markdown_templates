@@ -17,5 +17,5 @@
 # <http://www.gnu.org/licenses/>.
 
 module RailsMarkdownTemplates
-  VERSION = "2.1.1"
+  VERSION = "2.1.2"
 end
