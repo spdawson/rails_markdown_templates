@@ -38,7 +38,8 @@ module ActionView
         compiled_source = erb.call(template)
 
         <<-RUBY_CODE
-markdown = Redcarpet::Markdown.new(RailsMarkdownTemplates::Renderer)
+markdown = Redcarpet::Markdown.new(RailsMarkdownTemplates::Renderer,
+                                   RailsMarkdownTemplates.redcarpet_options)
 output = markdown.render(begin;#{compiled_source};end)
 content_for(RailsMarkdownTemplates.metadata_tags_key,
             markdown.renderer.metadata_tags)

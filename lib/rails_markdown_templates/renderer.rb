@@ -29,7 +29,7 @@ module RailsMarkdownTemplates
     attr_accessor :metadata
 
     def initialize(options={})
-      super RailsMarkdownTemplates.redcarpet_options.merge(options)
+      super options
       @metadata = {}
     end
 
