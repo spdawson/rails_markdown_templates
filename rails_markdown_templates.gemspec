@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.name          = "rails_markdown_templates"
   s.require_paths = ["lib"]
   s.version       = RailsMarkdownTemplates::VERSION
-  s.license       = "GPLv3"
+  s.license       = "GPL-3.0"
 
   s.add_dependency "redcarpet", "~> 3.0"
 
